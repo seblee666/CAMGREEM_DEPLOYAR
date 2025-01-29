@@ -21,4 +21,14 @@ export async function Conectar(params) {
         console.log('Error al conectar a la base de datos');
     }
 }
+export async function ConsultarUsuarios(){
+    const client = new Client(config);
+    try{
+        await client.connect();
+        const result = await client.query('SELECT * FROM usuarios');
+        return result.rows;
+    }catch(error){
+        console.log('Error al consultar usuarios');
+    }
+}
 
