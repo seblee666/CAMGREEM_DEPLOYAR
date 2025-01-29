@@ -2,6 +2,7 @@ import express from 'express';
 import {dirname,join} from 'path';
 import {fileURLToPath} from 'url';
 import router from './routes/index.js';
+import { Conectar } from './services/conexion.js';
 
 const app = express();
 
@@ -15,3 +16,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+
+Conectar();
