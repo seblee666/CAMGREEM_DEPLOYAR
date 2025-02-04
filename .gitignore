@@ -55,10 +55,11 @@ dist
 .cache/
 
 
+
 .vuepress/dist
 
 
-dist/
+
 
 
 .out/
