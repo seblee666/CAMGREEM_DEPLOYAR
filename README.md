@@ -8,4 +8,6 @@ Para instalar las dependencias del proyecto, ejecuta:
 
 ```sh
 npm install
+
 npm install pg
+
