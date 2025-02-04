@@ -53,14 +53,12 @@ dist
 
 
 .cache/
-public
 
 
 .vuepress/dist
 
 
 dist/
-public/
 
 
 .out/
