@@ -13,4 +13,18 @@ router.get('/api/usuarios', async (req, res) => {
     const usuarios = await ConsultarUsuarios();
     res.status(200).json(usuarios);
 });
+
+router.post('/api/login', async (req, res) => {
+    const {username, password} = req.body;
+        if(!username || !password){
+            return res.status(400).json({message: 'Usuario y contraseña son requeridos'});
+        }
+
+    const result = await IniciarSesionUsuario(username, password);
+        if(result.sucess){
+            res.status(200).json(result);
+        }else{
+            res.status(401).json({sucess: false, message: 'Accesos invalidos'});
+        }
+});
 export default router;
