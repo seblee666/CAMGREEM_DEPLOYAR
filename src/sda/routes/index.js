@@ -20,6 +20,7 @@ router.post('/api/login', async (req, res) => {
         if(!username || !password){
             return res.status(400).json({message: 'Usuario y contraseña son requeridos'});
         }
+
     const result = await IniciarSesionUsuario(username, password);
         if(result.success){
             res.status(200).json(result);

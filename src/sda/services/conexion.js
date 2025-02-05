@@ -1,6 +1,6 @@
 import pg from 'pg';
 const { Client } = pg;
-import bcrypt from 'bcrypt';
+
 
 const config = {
     user: 'logincamgreen_db_user',
@@ -29,10 +29,7 @@ export async function ConsultarUsuarios(){
         const result = await client.query('SELECT * FROM usuarios');
         return result.rows;
     }catch(error){
-        console.error('Error al consultar usuarios:', error);
-        return { success: false, message: "Error en la base de datos" };
-    } finally {
-        await client.end();
+        console.log('Error al consultar usuarios');
     }
 }
 
@@ -48,16 +45,17 @@ export async function IniciarSesionUsuario(username,password){
             return { success: false, message: 'Usuario no encontrado' };
         }
         const user = verifyResult.rows[0];
-        if (!user.estado) {
-            return { success: false, message: 'Usuario inactivo' };
-        }
-        const passwordCorrect = await bcrypt.compare(password, user.password_hash);
+        const passwordCorrect = await bcrypt.compare(password, user.password);
         if(!passwordCorrect){
             return { success: false, message: 'Contraseña incorrecta' };
-        }return { success: true, message: 'Usuario Valido', user: {username:user.username, fullname:`${user.nombres} ${user.apellidos}`}};
+        }
+        if(!user.estado){
+            return { success: false, message: 'Usuario inactivo' };
+        }
+        return { success: true, message: 'Usuario Valido', user: {username:user.username, fullname:`${user.nombres} ${user.apellidos}`}};
     }catch (error){
         console.log('Error al iniciar sesion');
-        return { success: false, message: 'Error al iniciar sesion' };
+        return { succss: false, message: 'Error al iniciar sesion' };
     }finally{
         await client.end();
     }
